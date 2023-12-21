@@ -25,3 +25,9 @@ contributors
 3.Barekegn Asefa
 4.Biniam Birhanu
 5.Bacha Solomon
+
+FEATURE
+Account Management: Create new accounts with unique account numbers and passwords.
+Login System: Log in using account numbers and passwords.
+Transaction Handling: Deposit and withdraw funds, maintaining transaction histories.
+Balance Inquiry: Check account balances at any time.
