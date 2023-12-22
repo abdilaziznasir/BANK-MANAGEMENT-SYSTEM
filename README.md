@@ -19,18 +19,6 @@ Java language
 MySQL database
 
 
-contributors
-
-1.Amanuel Alemayehu
-
-2.Abdilaziz nasir
-
-3.Barekegn Asefa
-
-4.Biniam Birhanu
-
-5.Bacha Solomon
-
 
 Database
 The application uses a MySQL database to 
