@@ -239,36 +239,51 @@ class BankingManagementSystem {
     }
 
     private void login() throws SQLException {
-        System.out.print("Enter your account number: ");
-        String accountNumber = scanner.next();
+        int loginAttempts = 0;
+        boolean loggedIn = false;
 
-        // Check if the account number exists in the database
-        String checkAccountQuery = "SELECT * FROM accounts WHERE account_number = ?";
-        PreparedStatement checkAccountStatement = connection.prepareStatement(checkAccountQuery);
-        checkAccountStatement.setString(1, accountNumber);
-        ResultSet accountResult = checkAccountStatement.executeQuery();
+        while (loginAttempts < 3 && !loggedIn) {
+            System.out.print("Enter your account number: ");
+            String accountNumber = scanner.next();
 
-        if (accountResult.next()) {
-            System.out.print("Enter your password: ");
-            int password = scanner.nextInt();
+            // Check if the account number exists in the database
+            String checkAccountQuery = "SELECT * FROM accounts WHERE account_number = ?";
+            PreparedStatement checkAccountStatement = connection.prepareStatement(checkAccountQuery);
+            checkAccountStatement.setString(1, accountNumber);
+            ResultSet accountResult = checkAccountStatement.executeQuery();
 
-            // Verify the PIN
-            if (true) { // Ensure column name matches your database
-                // Login successful
-                String firstName = accountResult.getString("first_name");
-                String lastName = accountResult.getString("last_name");
-                currentUser = new BankAccount(accountNumber, password);
-                // Create a BankAccount object for the logged-in user
-                System.out.println("Login successful. Welcome, " + firstName + " " + lastName + "!");
+            if (accountResult.next()) {
+                System.out.print("Enter your password: ");
+                int password = scanner.nextInt();
+
+                // Verify the password
+                int storedPassword = accountResult.getInt("password"); // Ensure column name matches your database
+                if (password == storedPassword) {
+                    // Login successful
+                    String firstName = accountResult.getString("first_name");
+                    String lastName = accountResult.getString("last_name");
+                    currentUser = new BankAccount(accountNumber, password);
+                    // Create a BankAccount object for the logged-in user
+                    System.out.println("Login successful. Welcome, " + firstName + " " + lastName + "!");
+                    loggedIn = true;
+                } else {
+                    System.out.println("Incorrect password. Please try again.");
+                }
             } else {
-                System.out.println("Incorrect PIN. Login failed.");
+                System.out.println("Account not found. Please try again.");
             }
-        } else {
-            System.out.println("Account not found. Login failed.");
+
+            loginAttempts++;
         }
+
+        if (loginAttempts >= 3 && !loggedIn) {
+            System.out.println("Maximum login attempts reached. Please try again later.");
+            return; // Exit the login method without proceeding to showMenu()
+        }
+
+        // Proceed to showMenu() or "Welcome to your Account" section
+        showMainMenu();
     }
-
-
     private void performTransactions(BankAccount account) throws SQLException {
         int choice;
         do {
