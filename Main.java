@@ -113,7 +113,7 @@ class BankingManagementSystem {
                 insertTransactionStatement.setString(4, description);
                 insertTransactionStatement.executeUpdate();
 
-                System.out.println("Transaction completed successfully.");
+                System.out.println(" Transaction completed successfully. ");
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -125,11 +125,12 @@ class BankingManagementSystem {
 
     void showMainMenu() throws SQLException {
         while (true) {
-            System.out.println("\n*** Main Menu ***");
-            System.out.println("1. Create Account");
-            System.out.println("2. Login");
-            System.out.println("3. Perform Transaction");
-            System.out.println("4. Exit");
+            System.out.println("\n --Main Menu --");
+            System.out.println(" 1. Create Account");
+            System.out.println(" 2. Login");
+            System.out.println(" 3. Perform Transaction");
+            System.out.println(" 4. Exit");
+            System.out.println("----------------------------------------");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -149,7 +150,7 @@ class BankingManagementSystem {
                     }
                     break;
                 case 4:
-                    System.out.println("Thank you for using the banking management system. Goodbye!");
+                    System.out.println("Thank you for using  our bank. . Goodbye!");
                     closeDatabaseConnection();
                     return;
                 default:
@@ -161,7 +162,7 @@ class BankingManagementSystem {
 
     private void initiateTransaction(String accountNumber) throws SQLException {
 
-        System.out.println("\n====== Transaction Menu ======");
+        System.out.println("\n ||****************| Transaction Menu |*************||");
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Return to main menu");
@@ -191,9 +192,9 @@ class BankingManagementSystem {
 
 
     private void createAccount() throws SQLException {
-
-        System.out.println("\n============= welcome to Ethiopian commercial bank===========");
-        System.out.println("\n======Create a New Account =========");
+         System.out.println("   <<                ------------------------------------          >>      );
+        System.out.println("\n  ||**************  Welcome to banking system  project *************||");
+        System.out.println("\n       >>   Create a New Account             ");
         String accountNumber = null;
 
         // Prompt for account number and validate
@@ -239,40 +240,55 @@ class BankingManagementSystem {
     }
 
     private void login() throws SQLException {
-        System.out.print("Enter your account number: ");
-        String accountNumber = scanner.next();
+        int loginAttempts = 0;
+        boolean loggedIn = false;
 
-        // Check if the account number exists in the database
-        String checkAccountQuery = "SELECT * FROM accounts WHERE account_number = ?";
-        PreparedStatement checkAccountStatement = connection.prepareStatement(checkAccountQuery);
-        checkAccountStatement.setString(1, accountNumber);
-        ResultSet accountResult = checkAccountStatement.executeQuery();
+        while (loginAttempts < 3 && !loggedIn) {
+            System.out.print("Enter your account number: ");
+            String accountNumber = scanner.next();
 
-        if (accountResult.next()) {
-            System.out.print("Enter your password: ");
-            int password = scanner.nextInt();
+            // Check if the account number exists in the database
+            String checkAccountQuery = "SELECT * FROM accounts WHERE account_number = ?";
+            PreparedStatement checkAccountStatement = connection.prepareStatement(checkAccountQuery);
+            checkAccountStatement.setString(1, accountNumber);
+            ResultSet accountResult = checkAccountStatement.executeQuery();
 
-            // Verify the PIN
-            if (true) { // Ensure column name matches your database
-                // Login successful
-                String firstName = accountResult.getString("first_name");
-                String lastName = accountResult.getString("last_name");
-                currentUser = new BankAccount(accountNumber, password);
-                // Create a BankAccount object for the logged-in user
-                System.out.println("Login successful. Welcome, " + firstName + " " + lastName + "!");
+            if (accountResult.next()) {
+                System.out.print("Enter your password: ");
+                int password = scanner.nextInt();
+
+                // Verify the password
+                int storedPassword = accountResult.getInt("password"); // Ensure column name matches your database
+                if (password == storedPassword) {
+                    // Login successful
+                    String firstName = accountResult.getString("first_name");
+                    String lastName = accountResult.getString("last_name");
+                    currentUser = new BankAccount(accountNumber, password);
+                    // Create a BankAccount object for the logged-in user
+                    System.out.println("Login successful. Welcome, " + firstName + " " + lastName + "!");
+                    loggedIn = true;
+                } else {
+                    System.out.println("Incorrect password. Please try again.");
+                }
             } else {
-                System.out.println("Incorrect PIN. Login failed.");
+                System.out.println("Account not found. Please try again.");
             }
-        } else {
-            System.out.println("Account not found. Login failed.");
+
+            loginAttempts++;
         }
+
+        if (loginAttempts >= 3 && !loggedIn) {
+            System.out.println("Maximum login attempts reached. Please try again later.");
+            return; // Exit the login method without proceeding to showMenu()
+        }
+
+        //  "Welcome to your Account" section
+      
     }
-
-
     private void performTransactions(BankAccount account) throws SQLException {
         int choice;
         do {
-            System.out.println("\n##############---- Welcome to your Account ---###########");
+            System.out.println("\n                 --- Welcome to your Account---            ");
             System.out.println("1. View Balance");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
