@@ -113,7 +113,7 @@ class BankingManagementSystem {
                 insertTransactionStatement.setString(4, description);
                 insertTransactionStatement.executeUpdate();
 
-                System.out.println("Transaction completed successfully.");
+                System.out.println(" Transaction completed successfully. ");
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -125,11 +125,12 @@ class BankingManagementSystem {
 
     void showMainMenu() throws SQLException {
         while (true) {
-            System.out.println("\n*** Main Menu ***");
-            System.out.println("1. Create Account");
-            System.out.println("2. Login");
-            System.out.println("3. Perform Transaction");
-            System.out.println("4. Exit");
+            System.out.println("\n --Main Menu --");
+            System.out.println(" 1. Create Account");
+            System.out.println(" 2. Login");
+            System.out.println(" 3. Perform Transaction");
+            System.out.println(" 4. Exit");
+            System.out.println("----------------------------------------");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -149,7 +150,7 @@ class BankingManagementSystem {
                     }
                     break;
                 case 4:
-                    System.out.println("Thank you for using the banking management system. Goodbye!");
+                    System.out.println("Thank you for using  our bank. . Goodbye!");
                     closeDatabaseConnection();
                     return;
                 default:
@@ -161,7 +162,7 @@ class BankingManagementSystem {
 
     private void initiateTransaction(String accountNumber) throws SQLException {
 
-        System.out.println("\n====== Transaction Menu ======");
+        System.out.println("\n ||****************| Transaction Menu |*************||");
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Return to main menu");
@@ -191,9 +192,9 @@ class BankingManagementSystem {
 
 
     private void createAccount() throws SQLException {
-
-        System.out.println("\n============= welcome to Ethiopian commercial bank===========");
-        System.out.println("\n======Create a New Account =========");
+         System.out.println("   <<                ------------------------------------          >>      );
+        System.out.println("\n  ||**************  Welcome to banking system  project *************||");
+        System.out.println("\n       >>   Create a New Account             ");
         String accountNumber = null;
 
         // Prompt for account number and validate
@@ -281,13 +282,13 @@ class BankingManagementSystem {
             return; // Exit the login method without proceeding to showMenu()
         }
 
-        // Proceed to showMenu() or "Welcome to your Account" section
-        showMainMenu();
+        //  "Welcome to your Account" section
+      
     }
     private void performTransactions(BankAccount account) throws SQLException {
         int choice;
         do {
-            System.out.println("\n##############---- Welcome to your Account ---###########");
+            System.out.println("\n                 --- Welcome to your Account---            ");
             System.out.println("1. View Balance");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
