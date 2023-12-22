@@ -2,7 +2,7 @@ Banking Management System
 
 This is a simple banking management system implemented in Java. It provides basic functionalities such as creating accounts, logging in, performing transactions, viewing account balance, and viewing transaction history.
 
-Features
+FEATURES
 
 
   User can create a new account by providing account details such as account number, 
@@ -22,25 +22,22 @@ MySQL database
 contributors
 
 1.Amanuel Alemayehu
+
 2.Abdilaziz nasir
+
 3.Barekegn Asefa
+
 4.Biniam Birhanu
+
 5.Bacha Solomon
 
-FEATURE
-Account Management: Create new accounts with 
-unique account numbers and passwords.
-Login System: Log in using account numbers and passwords.
-Transaction Handling: Deposit and withdraw funds, 
-maintaining transaction histories.
-Balance Inquiry: Check account balances at any time.
 
 Database
 The application uses a MySQL database to 
 store account information and transaction records. 
 Make sure to set up your database configuration in the code:
 
-Database URL: jdbc:mysql://localhost:3306/bank_information
+Database URL: jdbc:mysql://localhost:3306/use your database
 Username: root
 Password: your_password
 The SQL scripts to create the necessary tables 
