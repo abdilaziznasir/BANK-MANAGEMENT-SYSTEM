@@ -31,3 +31,19 @@ Password: your_password
 The SQL scripts to create the necessary tables 
 (accounts and transactions) are provided in the 
 database_scripts directory
+
+
+
+# contributors
+
+1.Amanuel Alemayehu
+
+2.Abdilaziz nasir
+
+3.Barekegn Asefa
+
+4.Biniam Birhanu
+
+5.Bacha Solomon
+
+
