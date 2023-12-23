@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class BankAccount {
@@ -113,7 +114,7 @@ class BankingManagementSystem {
                 insertTransactionStatement.setString(4, description);
                 insertTransactionStatement.executeUpdate();
 
-                System.out.println(" Transaction completed successfully. ");
+                System.out.println("Transaction completed successfully.");
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -125,46 +126,53 @@ class BankingManagementSystem {
 
     void showMainMenu() throws SQLException {
         while (true) {
-            System.out.println("\n --Main Menu --");
-            System.out.println(" 1. Create Account");
-            System.out.println(" 2. Login");
-            System.out.println(" 3. Perform Transaction");
-            System.out.println(" 4. Exit");
-            System.out.println("----------------------------------------");
+            System.out.println("\n---------------------select the choice -------------------");
+            System.out.println("1. Create Account");
+            System.out.println("2. Login");
+            System.out.println("3. Perform Transaction");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    createAccount();
-                    break;
-                case 2:
-                    login();
-                    performTransactions(currentUser);
-                    break;
-                case 3:
-                    if (isLoggedIn()) {
-                        initiateTransaction(currentUser.getAccountNumber());
-                    } else {
-                        System.out.println("Please login first.");
-                    }
-                    break;
-                case 4:
-                    System.out.println("Thank you for using  our bank. . Goodbye!");
-                    closeDatabaseConnection();
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+            int choice;
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character after reading the integer
+
+                switch (choice) {
+                    case 1:
+                        createAccount();
+                        break;
+                    case 2:
+                        login();
+                        performTransactions(currentUser);
+                        break;
+                    case 3:
+                        if (isLoggedIn()) {
+                            initiateTransaction(currentUser.getAccountNumber());
+                        } else {
+                            System.out.println("Please login first.");
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Thank you for using the banking management system. Goodbye!");
+                        closeDatabaseConnection();
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume the invalid input
             }
         }
     }
 
     private void initiateTransaction(String accountNumber) throws SQLException {
 
-        System.out.println("\n ||****************| Transaction Menu |*************||");
+        System.out.println("\n------------------ Transaction Menu ----------------");
         System.out.println("1. Deposit");
-        System.out.println("2. Withdraw");
+
         System.out.println("3. Return to main menu");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
@@ -173,10 +181,8 @@ class BankingManagementSystem {
             case 1:
                 performTransaction(accountNumber, "Deposit");
                 break;
+
             case 2:
-                performTransaction(accountNumber, "Withdraw");
-                break;
-            case 3:
                 return;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -189,12 +195,9 @@ class BankingManagementSystem {
     private boolean isLoggedIn() {
         return currentUser != null;
     }
-
-
     private void createAccount() throws SQLException {
-         System.out.println("   <<                ------------------------------------          >>      );
-        System.out.println("\n  ||**************  Welcome to banking system  project *************||");
-        System.out.println("\n       >>   Create a New Account             ");
+        System.out.println("\n------------------- Welcome to Programmers Bank -------------------");
+        System.out.println("\n====== Create a New Account ========");
         String accountNumber = null;
 
         // Prompt for account number and validate
@@ -207,21 +210,35 @@ class BankingManagementSystem {
                 System.out.println("Invalid account number. Please enter a 10-digit account number.");
             }
         }
-        System.out.print("Set password: ");
-        String password = scanner.next();
-        System.out.print("Enter first name: ");
-        String firstName = scanner.next();
-        System.out.print("Enter last name: ");
-        String lastName = scanner.next();
-        System.out.print("Enter job: ");
-        String job = scanner.next();
-        System.out.print("Enter nationality: ");
-        String nationality = scanner.next();
-        System.out.print("Enter sex: ");
-        String sex = scanner.next();
-        System.out.print("Enter mother's name: ");
-        String motherName = scanner.next();
 
+        int passwordAttempts = 0;
+        String password = null;
+
+        // Loop for password input with a minimum length of 5 characters
+        while (passwordAttempts < 3) {
+            System.out.print("Set password (at least 5 characters): ");
+            password = scanner.next(); // Using nextLine() to accept spaces and multiple characters
+
+            if (password.length() < 5) {
+                System.out.println("Password should be at least 5 characters long.");
+                passwordAttempts++;
+
+                if (passwordAttempts == 3) {
+                    System.out.println("Maximum attempts reached. Returning to the main menu.");
+                    return; // Return to the main menu
+                }
+            } else {
+                break; // Exit the loop if the password meets the criteria
+            }
+        }
+
+        scanner.nextLine(); // Consume the newline character after reading password
+
+        String firstName = getStringInput("Enter first name: ");
+        String lastName = getStringInput("Enter last name: ");
+        String job = getStringInput("Enter job: ");
+        String nationality = getStringInput("Enter nationality: ");
+        String motherName = getStringInput("Enter mother's name: ");
 
         String insertQuery = "INSERT INTO accounts (account_number, password, balance, first_name, last_name, job, nationality, sex, mother_name) VALUES (?, ?, 0, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
@@ -231,12 +248,28 @@ class BankingManagementSystem {
         preparedStatement.setString(4, lastName);
         preparedStatement.setString(5, job);
         preparedStatement.setString(6, nationality);
-        preparedStatement.setString(7, sex);
+        preparedStatement.setString(7, ""); // Assuming the 'sex' column is not used in this code
         preparedStatement.setString(8, motherName);
         preparedStatement.executeUpdate();
 
         System.out.println("Account created successfully.");
+    }
 
+    private String getStringInput(String prompt) {
+        String input;
+
+        while (true) {
+            System.out.print(prompt);
+            input = scanner.nextLine();
+
+            if (!input.isEmpty() && input.matches("[a-zA-Z]+")) {
+                break; // Break the loop if the input is not empty and contains only alphabetic characters
+            } else {
+                System.out.println("Invalid input. Please enter a valid string.");
+            }
+        }
+
+        return input;
     }
 
     private void login() throws SQLException {
@@ -277,18 +310,15 @@ class BankingManagementSystem {
             loginAttempts++;
         }
 
-        if (loginAttempts >= 3 && !loggedIn) {
+        if (!loggedIn) {
             System.out.println("Maximum login attempts reached. Please try again later.");
-            return; // Exit the login method without proceeding to showMenu()
         }
-
-        //  "Welcome to your Account" section
-      
+//        performTransactions();
     }
     private void performTransactions(BankAccount account) throws SQLException {
         int choice;
         do {
-            System.out.println("\n                 --- Welcome to your Account---            ");
+            System.out.println("\n----------------- Welcome to your Account ------------------");
             System.out.println("1. View Balance");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
