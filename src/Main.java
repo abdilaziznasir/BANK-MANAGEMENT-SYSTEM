@@ -88,38 +88,38 @@ class BankingManagementSystem {
         }
     }
     private void performTransaction(String accountNumber, String transactionType) throws SQLException {
+        try {
+            System.out.println("\n-------------- " + transactionType + " ---------------");
+            System.out.print("Enter account number: ");
+            accountNumber = String.valueOf(scanner.nextInt());
+            scanner.nextLine(); // Consume the newline character
 
-        String transactionType1 = transactionType;
-        {
-            try {
-                System.out.println("\n*** " + transactionType1 + " ***");
-                System.out.print("Enter the amount: ");
-                double amount = scanner.nextDouble();
-                System.out.print("Enter a description: ");
-                String description = scanner.nextLine();
+            System.out.print("Enter the amount: ");
+            double amount = scanner.nextDouble();
+            scanner.nextLine(); // Consume the newline character
 
-                // Update account balance
-                String updateBalanceQuery = "UPDATE accounts SET balance = balance + ? WHERE account_number = ?";
-                PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery);
-                updateBalanceStatement.setDouble(1, amount);
-                updateBalanceStatement.setString(2, accountNumber);
-                updateBalanceStatement.executeUpdate();
+            System.out.print("Enter a description: ");
+            String description = scanner.nextLine();
 
-                // Insert transaction record
-                String insertTransactionQuery = "INSERT INTO transactions (account_number, transaction_type, amount, description) VALUES (?, ?, ?, ?)";
-                PreparedStatement insertTransactionStatement = connection.prepareStatement(insertTransactionQuery);
-                insertTransactionStatement.setString(1, accountNumber);
-                insertTransactionStatement.setString(2, transactionType1);
-                insertTransactionStatement.setDouble(3, amount);
-                insertTransactionStatement.setString(4, description);
-                insertTransactionStatement.executeUpdate();
+            // Update account balance
+            String updateBalanceQuery = "UPDATE accounts SET balance = balance - ? WHERE account_number = ?";
+            PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery);
+            updateBalanceStatement.setDouble(1, amount);
+            updateBalanceStatement.setString(2, accountNumber);
+            updateBalanceStatement.executeUpdate();
 
-                System.out.println("Transaction completed successfully.");
+            // Insert transaction record
+            String insertTransactionQuery = "INSERT INTO transactions (account_number, transaction_type, amount, description) VALUES (?, ?, ?, ?)";
+            PreparedStatement insertTransactionStatement = connection.prepareStatement(insertTransactionQuery);
+            insertTransactionStatement.setString(1, accountNumber);
+            insertTransactionStatement.setString(2, transactionType);
+            insertTransactionStatement.setDouble(3, amount);
+            insertTransactionStatement.setString(4, description);
+            insertTransactionStatement.executeUpdate();
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
+            System.out.println("Transaction completed successfully.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -171,9 +171,9 @@ class BankingManagementSystem {
     private void initiateTransaction(String accountNumber) throws SQLException {
 
         System.out.println("\n------------------ Transaction Menu ----------------");
-        System.out.println("1. Deposit");
+        System.out.println("✔ 1. Deposit");
 
-        System.out.println("3. Return to main menu");
+        System.out.println("✔ 2. Return to main menu");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
 
@@ -319,11 +319,11 @@ class BankingManagementSystem {
         int choice;
         do {
             System.out.println("\n----------------- Welcome to your Account ------------------");
-            System.out.println("1. View Balance");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. View Transaction History");
-            System.out.println("5. Logout");
+            System.out.println("✔ 1. View Balance");
+            System.out.println("✔ 2. Deposit");
+            System.out.println("✔ 3. Withdraw");
+            System.out.println("✔ 4. View Transaction History");
+            System.out.println("✔ 5. Logout");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
 
