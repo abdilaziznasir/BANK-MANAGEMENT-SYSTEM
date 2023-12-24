@@ -60,6 +60,56 @@ public BankAccount(String accountNumber, int password) {
             System.out.println(transaction);
         }
     }
+     
+    //line (64-111) if it doesn't work leave it
+    // Method to update account information
+    public void updateAccountInformation(String newContactDetails, String newEmailAddress, String newMailingAddress) {
+        // Validate the new contact details
+        if (isValidContactDetails(newContactDetails)) {
+            this.contactDetails = newContactDetails;
+        } else {
+            System.out.println("Invalid contact details. Please provide valid contact information.");
+        }
+
+        // Validate the new email address
+        if (isValidEmailAddress(newEmailAddress)) {
+            this.emailAddress = newEmailAddress;
+        } else {
+            System.out.println("Invalid email address. Please provide a valid email address.");
+        }
+
+        // Validate the new mailing address
+        if (isValidMailingAddress(newMailingAddress)) {
+            this.mailingAddress = newMailingAddress;
+        } else {
+            System.out.println("Invalid mailing address. Please provide a valid mailing address.");
+        }
+    }
+
+    private boolean isValidContactDetails(String newContactDetails) {
+
+    };
+
+
+    // Method to close the account with error handling
+    public void closeAccount() {
+        // Add logic to close the account, including any necessary validation and confirmation steps
+        if (isBalanceZero()) {
+            this.accountStatus = "Closed";
+            this.balance = 0.0;
+            this.transactionHistory.clear();
+            System.out.println("Account closed successfully.");
+        } else {
+            System.out.println("Unable to close account. Please ensure the account balance is zero before closing.");
+        }
+    }
+
+    private boolean isBalanceZero() {
+        return this.balance == 0.0;
+    }
+
+
+     
 }
 
 class BankingManagementSystem {
@@ -241,19 +291,21 @@ class BankingManagementSystem {
         String firstName = getStringInput("Enter first name: ");
         String lastName = getStringInput("Enter last name: ");
         String job = getStringInput("Enter job: ");
+        String emailAddresss = getStringInput("Enter your emailAddrses: ");
         String nationality = getStringInput("Enter nationality: ");
         String motherName = getStringInput("Enter mother's name: ");
 
-        String insertQuery = "INSERT INTO accounts (account_number, password, balance, first_name, last_name, job, nationality, sex, mother_name) VALUES (?, ?, 0, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO accounts (account_number, password, balance, first_name, last_name, job,emailAddress, nationality, sex, mother_name) VALUES (?, ?, 0, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
         preparedStatement.setString(1, accountNumber);
         preparedStatement.setString(2, password);
         preparedStatement.setString(3, firstName);
         preparedStatement.setString(4, lastName);
         preparedStatement.setString(5, job);
-        preparedStatement.setString(6, nationality);
-        preparedStatement.setString(7, ""); // Assuming the 'sex' column is not used in this code
-        preparedStatement.setString(8, motherName);
+         preparedStatement.setString(6, emailAddress);
+        preparedStatement.setString(7, nationality);
+        preparedStatement.setString(8, ""); // Assuming the 'sex' column is not used in this code
+        preparedStatement.setString(9, motherName);
         preparedStatement.executeUpdate();
 
         System.out.println("Account created successfully.");
