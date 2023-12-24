@@ -1,30 +1,30 @@
-Project Title: Banking Management System
+this repository is used for collaburating  group of our project.
+Banking Management System
 
-Project Overview:
-The Banking Management System is a Java-based application that allows users to create and manage bank accounts. It provides functionalities such as creating new accounts, depositing and withdrawing funds, and viewing transaction history.
+This is a simple banking management system implemented in Java. It provides basic functionalities such as creating accounts, 
+logging in, performing transactions, viewing account balance, and viewing transaction history.
 
-Project Structure:
+Features
+User can create a new account by providing account details such as account number, password, 
+first name, last name, job, nationality, sex, and mother's name.
+User can log in to their account using the account number and password.
+Once logged in, users can perform transactions such as deposit and withdrawal.
+Users can view their account balance.
+Users can view their transaction history.
+Users can log out of their account.
 
-BankAccount Class: Represents a bank account with attributes such as account number, password, balance, and transaction history. It includes methods for depositing, withdrawing, and validating the password.
-BankingManagementSystem Class: Manages the overall banking system, including database connection, user interaction, and account creation.
-Features Implemented:
+Prerequisites
 
-Account Creation: Users can create new bank accounts by providing an account number and a password.
-Deposit and Withdrawal: Account holders can deposit funds into their accounts and make withdrawals.
-Transaction History: The system maintains a transaction history for each account, allowing users to view their past transactions.
-Recent Update:
+Java Development Kit (JDK)
+MySQL database
 
-Enhancement: Added password strength validation to the account creation process to enforce a strong password policy.
-Users are now prompted to enter a password that is at least 5 characters long and contains at least one lowercase letter, one uppercase letter, one number, and one special character.
-This ensures that all newly created account passwords meet the specified criteria for strength and security.
-Commit Description:
+Contributions are welcome! Please follow the contribution guidelines.
+list of contributors
 
-Commit Message: "Add password strength validation to createAccount method"
-Enforce a strong password policy in the createAccount method of the BankingManagementSystem class.
-The user is now prompted to enter a password that meets specific criteria for strength and security.
-Fixes: #<issue_number> (if applicable)
-Next Steps:
+1.Amanuel Alemayehu
+2.Abdilaziz nasir
+3.Barekegn Asefa
+4.Biniam Birhanu
+5.Bacha Solomon
 
-Consider implementing additional features such as account management, account closure, and account balance inquiry.
-Perform thorough testing to ensure the system's stability and reliability.
-Document the project's functionalities, classes, and methods for future reference.
+For any questions or issues, please contact us  harolife31@gmail.com.
