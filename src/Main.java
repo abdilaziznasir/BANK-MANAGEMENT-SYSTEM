@@ -214,23 +214,27 @@ class BankingManagementSystem {
         int passwordAttempts = 0;
         String password = null;
 
-        // Loop for password input with a minimum length of 5 characters
-        while (passwordAttempts < 3) {
-            System.out.print("Set password (at least 5 characters): ");
-            password = scanner.next(); // Using nextLine() to accept spaces and multiple characters
+       boolean validPassword = false;
 
-            if (password.length() < 5) {
-                System.out.println("Password should be at least 5 characters long.");
-                passwordAttempts++;
+    // Loop for password input with a minimum length of 5 characters and containing lowercase, uppercase, number, and special character
+    while (!validPassword) {
+        System.out.print("Set password (at least 5 characters, including lowercase, uppercase, number, and special character): ");
+        password = scanner.next(); // Using nextLine() to accept spaces and multiple characters
 
-                if (passwordAttempts == 3) {
-                    System.out.println("Maximum attempts reached. Returning to the main menu.");
-                    return; // Return to the main menu
-                }
-            } else {
-                break; // Exit the loop if the password meets the criteria
-            }
+        if (password.length() < 5) {
+            System.out.println("Password should be at least 5 characters long.");
+        } else if (!password.matches(".*[a-z].*")) {
+            System.out.println("Password should contain at least one lowercase letter.");
+        } else if (!password.matches(".*[A-Z].*")) {
+            System.out.println("Password should contain at least one uppercase letter.");
+        } else if (!password.matches(".*\\d.*")) {
+            System.out.println("Password should contain at least one number.");
+        } else if (!password.matches(".*[^a-zA-Z0-9].*")) {
+            System.out.println("Password should contain at least one special character.");
+        } else {
+            validPassword = true; // Exit the loop if the password meets the criteria
         }
+    }
 
         scanner.nextLine(); // Consume the newline character after reading password
 
