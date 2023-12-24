@@ -1,0 +1,30 @@
+Project Title: Banking Management System
+
+Project Overview:
+The Banking Management System is a Java-based application that allows users to create and manage bank accounts. It provides functionalities such as creating new accounts, depositing and withdrawing funds, and viewing transaction history.
+
+Project Structure:
+
+BankAccount Class: Represents a bank account with attributes such as account number, password, balance, and transaction history. It includes methods for depositing, withdrawing, and validating the password.
+BankingManagementSystem Class: Manages the overall banking system, including database connection, user interaction, and account creation.
+Features Implemented:
+
+Account Creation: Users can create new bank accounts by providing an account number and a password.
+Deposit and Withdrawal: Account holders can deposit funds into their accounts and make withdrawals.
+Transaction History: The system maintains a transaction history for each account, allowing users to view their past transactions.
+Recent Update:
+
+Enhancement: Added password strength validation to the account creation process to enforce a strong password policy.
+Users are now prompted to enter a password that is at least 5 characters long and contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+This ensures that all newly created account passwords meet the specified criteria for strength and security.
+Commit Description:
+
+Commit Message: "Add password strength validation to createAccount method"
+Enforce a strong password policy in the createAccount method of the BankingManagementSystem class.
+The user is now prompted to enter a password that meets specific criteria for strength and security.
+Fixes: #<issue_number> (if applicable)
+Next Steps:
+
+Consider implementing additional features such as account management, account closure, and account balance inquiry.
+Perform thorough testing to ensure the system's stability and reliability.
+Document the project's functionalities, classes, and methods for future reference.
